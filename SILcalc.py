@@ -11,7 +11,7 @@
 hours_per_year = 8760
 
 sif_name = input('Enter SIF name: ')
-
+sif_name = sif_name.upper()
 print('\nSubsystem: Sensor') #Start sensor subsytem calcs
 while True:
 	sensor_voting = input('Enter sensor voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3): ')
@@ -183,3 +183,8 @@ else:
 	sil = 'Greater than SIL3, review data validity'
 
 print('\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft))
+fout = open(sif_name+'.txt','w')
+print(fout)
+line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft)
+fout.write(line1)
+fout.close()
