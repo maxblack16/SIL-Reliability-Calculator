@@ -63,7 +63,7 @@ while True:
 		print('Invalid input. Please try again.')
 print('Sensor PFDavg = %g' % sensor_pfd)
 print('Sensor HFT = %d' % sensor_hft)
-
+#%%
 print('\nSubsystem: Logic Solver') #Start logic solver subsytem calcs
 while True:
 	ls_voting = input('Enter logic solver voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3): ')
@@ -115,7 +115,7 @@ while True:
 		print('Invalid input. Please try again.')
 print('Logic Solver PFDavg = %g' % ls_pfd)
 print('Logic Solver HFT = %d' % ls_hft)
-
+#%%
 print('\nSubsystem: Final Element') #Start final element subsytem calcs
 while True:
 	fe_voting = input('Enter final element voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3): ')
@@ -167,7 +167,7 @@ while True:
 		print('Invalid input. Please try again.')
 print('Final Element PFDavg = %g' % fe_pfd)
 print('Final Element HFT = %d' % fe_hft)
-
+#%%
 #Calculate Total PFDavg and RRF
 sif_pfd = sensor_pfd + ls_pfd + fe_pfd
 sif_rrf = 1 / sif_pfd
@@ -183,6 +183,7 @@ else:
 	sil = 'Greater than SIL3, review data validity'
 
 print('\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft))
+#%%
 fout = open(sif_name+'.txt','w')
 print(fout)
 line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft)
