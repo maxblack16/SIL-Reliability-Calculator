@@ -170,7 +170,6 @@ print('\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT:
 print('\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft))
 #%%
 fout = open(sif_name+'.txt','w')
-print(fout)
 line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n---' % (sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil)
 line2 = '\nSubsystem: Sensor\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft)
 line3 = '\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft)
