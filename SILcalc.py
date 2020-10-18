@@ -18,9 +18,9 @@ calc = ""
 
 # Custom Functions:
 def results(pfd, hft, calc):
-    print('Calculation used for %s subsystem: %s' % (subsystem, calc))
-    print('%s PFDavg = %g' % (subsystem, pfd))
-    print('%s HFT = %d' % (subsystem, hft))
+    print('%s subsystem calculation: %s' % (subsystem, calc))
+    print('%s PFDavg: %g' % (subsystem, pfd))
+    print('%s HFT: %d' % (subsystem, hft))
 
 def vote_1oo1(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
     global pfd, hft, calc
@@ -130,24 +130,27 @@ subsystem = "Sensor"
 subcalc(vote)
 sensor_pfd = pfd
 sensor_hft = hft
+sensor_calc = calc
 #%%
 print('\nSubsystem: Logic Solver') #Start logic solver subsytem calcs
 subsystem = "Logic Solver"
 subcalc(vote)
 ls_pfd = pfd
 ls_hft = hft
+ls_calc = calc
 #%%
 print('\nSubsystem: Final Element') #Start final element subsytem calcs
 subsystem = "Final Element"
 subcalc(vote)
 fe_pfd = pfd
 fe_hft = hft
+fe_calc = calc
 #%%
 # Calculate Total PFDavg and RRF:
 sif_pfd = sensor_pfd + ls_pfd + fe_pfd #ISA-TR84.00.02-2015 Equation 8.1
 sif_rrf = 1 / sif_pfd
 if 10 > sif_rrf:
-	sil = 'sub SIL1'
+	sil = 'Less than SIL1'
 elif 10 <= sif_rrf <100:
 	sil = 'SIL1'
 elif 100 <= sif_rrf < 1000:
@@ -156,15 +159,21 @@ elif 1000 <= sif_rrf <10000:
 	sil = 'SIL3'
 else:
 	sil = 'Greater than SIL3, review data validity'
-
+#%%
+# Calculate subsystem PFDavg percentage contribution to the Total PFDavg
 sensor_pcnt = (sensor_pfd/sif_pfd)*100
 ls_pcnt = (ls_pfd/sif_pfd)*100
 fe_pcnt = (fe_pfd/sif_pfd)*100
-print('\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft))
-print('\nSensor contribution: %g%%\nLogic Solver contribution: %g%%\nFinal ELement contribution: %g%%' % (round(sensor_pcnt, 2), round(ls_pcnt, 2), round(fe_pcnt, 2)))
+print('\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil))
+print('\nSubsystem: Sensor\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft))
+print('\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft))
+print('\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft))
 #%%
 fout = open(sif_name+'.txt','w')
 print(fout)
-line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n\nSensor HFT: %d \nLogic Solver HFT: %d \nFinal Element HFT: %d' %(sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil, sensor_hft, ls_hft, fe_hft)
-fout.write(line1)
+line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n---' % (sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil)
+line2 = '\nSubsystem: Sensor\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft)
+line3 = '\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft)
+line4 = '\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft)
+fout.writelines([line1, line2, line3, line4])
 fout.close()
