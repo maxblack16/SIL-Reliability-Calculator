@@ -14,46 +14,55 @@ pfd = 0
 hft = 0
 vote = 0
 hours_per_year = 8760
+calc = ""
 
 # Custom Functions:
-def results(pfd, hft):
+def results(pfd, hft, calc):
+    print('Calculation used for %s subsystem: %s' % (subsystem, calc))
     print('%s PFDavg = %g' % (subsystem, pfd))
     print('%s HFT = %d' % (subsystem, hft))
 
 def vote_1oo1(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
-    global pfd
-    global hft
+    global pfd, hft, calc
+    calc =  'ISA-TR84.00.02-2015 Table C.2-1oo1'
     pfd = ((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)
     hft = 0
-    results(pfd, hft)
+    results(pfd, hft, calc)
 
 def vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd
-    global hft
+    global pfd, hft, calc
+    calc = 'ISA-TR84.00.02-2015 Table C.2-1oo2'
     pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + ((ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr)))
     hft = 1
-    results(pfd, hft)
+    results(pfd, hft, calc)
 
 def vote_1oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd
-    global hft
+    global pfd, hft, calc
+    calc = 'ISA-TR84.00.02-2015 Table C.2-1oo3'
     pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**3 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + ((ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr)))
     hft = 2
-    results(pfd, hft)
+    results(pfd, hft, calc)
 
 def vote_2oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
-    global pfd
-    global hft
+    global pfd, hft, calc
+    calc = 'ISA-TR84.00.02-2015 Table C.2-2oo2'
     pfd = 2*(((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 0
-    results(pfd, hft)
+    results(pfd, hft, calc)
 
 def vote_2oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd
-    global hft
+    global pfd, hft, calc
+    calc = 'ISA-TR84.00.02-2015 Table C.2-2oo3'
     pfd = 3*((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))**2 + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr)
     hft = 1
-    results(pfd, hft)
+    results(pfd, hft, calc)
+
+def vote_3oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
+    global pfd, hft, calc
+    calc = 'ISA-TR84.00.02-2015 Table C.2-2oo3'
+    pfd = 3*(((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr))
+    hft = 0
+    results(pfd, hft, calc)
 
 def subcalc(vote):
     while True:
@@ -61,14 +70,14 @@ def subcalc(vote):
             global voting
             vote = input('Enter voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3): ')
             voting = vote
-            if voting == '1oo1': #ISA-TR84.00.02-2015 Table C.2-1oo1
+            if voting == '1oo1':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
                 vote_1oo1(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr)
                 break
-            elif voting == '1oo2': #ISA-TR84.00.02-2015 Table C.2-1oo2
+            elif voting == '1oo2':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
@@ -76,7 +85,7 @@ def subcalc(vote):
                 ccf = float(input('Enter Common Cause Factor: '))
                 vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
                 break
-            elif voting == '1oo3': #ISA-TR84.00.02-2015 Table C.2-1oo3
+            elif voting == '1oo3':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
@@ -84,20 +93,27 @@ def subcalc(vote):
                 ccf = float(input('Enter Common Cause Factor: '))
                 vote_1oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
                 break
-            elif voting == '2oo2': #ISA-TR84.00.02-2015 Table C.2-2oo2
+            elif voting == '2oo2':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
                 vote_2oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr)
                 break
-            elif voting == '2oo3': #ISA-TR84.00.02-2015 Table C.2-2oo3
+            elif voting == '2oo3':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
                 ccf = float(input('Enter Common Cause Factor: '))
                 vote_2oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
+                break
+            elif voting == '3oo3':
+                du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
+                proof_test_yr = float(input('Enter proof test interval in years: '))
+                mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
+                dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
+                vote_3oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr)
                 break
             else:
                 print('Invalid voting')
