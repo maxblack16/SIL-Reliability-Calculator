@@ -4,6 +4,7 @@
 # Calculates SIF Total PFDavg and RRF for most common voting configurations.
 # Voted subsystems are limited to having the same devices i.e. same failure rate data, prrof test interval, etc.
 # Calculations are for Low Demand functions.
+# Calculations are simplified to exclude Diagnostic Interval (DI) due to negligible contribution to subsystem PFDavg.
 #
 # Written by: Matthew Bates
 # Date: 2nd September 2020
@@ -127,7 +128,7 @@ fe_pfd = pfd
 fe_hft = hft
 #%%
 # Calculate Total PFDavg and RRF:
-sif_pfd = sensor_pfd + ls_pfd + fe_pfd
+sif_pfd = sensor_pfd + ls_pfd + fe_pfd #ISA-TR84.00.02-2015 Equation 8.1
 sif_rrf = 1 / sif_pfd
 if 10 > sif_rrf:
 	sil = 'sub SIL1'
