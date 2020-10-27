@@ -68,7 +68,7 @@ def subcalc(vote):
     while True:
         try:
             global voting
-            vote = input('Enter voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3): ')
+            vote = input('Enter voting (1oo1, 1oo2, 1oo3, 2oo2, 2oo3, 3oo3): ')
             voting = vote
             if voting == '1oo1':
                 du_failure_rate_yr = float(input('Enter dangerous undiagnosed failure rate per year: '))
