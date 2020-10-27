@@ -9,7 +9,10 @@
 # Written by: Matthew Bates
 # Date: 2nd September 2020
 #
-# Initialise variables:
+#
+import os
+from datetime import datetime
+
 pfd = 0
 hft = 0
 vote = 0
@@ -169,10 +172,21 @@ print('\nSubsystem: Sensor\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n'
 print('\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft))
 print('\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft))
 #%%
-fout = open(sif_name+'.txt','w')
+revision_stamp = datetime.now()
+revision_stamp = revision_stamp.strftime("%d/%m/%Y %H:%M:%S")
+
+path = os.getcwd()
+path = path + "\\" + sif_name + "\\"
+
+if not os.path.exists(path):
+    os.makedirs(path)
+os.chdir(path)
+
+fout = open(sif_name+'.txt','a')
+line0 = '-------------------------------\n----- %s -----\n-------------------------------' % revision_stamp
 line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n---' % (sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil)
 line2 = '\nSubsystem: Sensor\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft)
 line3 = '\nSubsystem: Logic Solver\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft)
-line4 = '\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft)
-fout.writelines([line1, line2, line3, line4])
+line4 = '\nSubsystem: Final Element\n%s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n\n' % (fe_calc, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft)
+fout.writelines([line0, line1, line2, line3, line4])
 fout.close()
