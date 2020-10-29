@@ -36,7 +36,7 @@ def vote_1oo1(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rat
 def vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
     global pfd, hft, calc, du_fr, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-1oo2'
-    pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + ((ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr)))
+    pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 1
     du_fr = du_failure_rate_yr
     pt = proof_test_yr
@@ -46,7 +46,7 @@ def vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rat
 def vote_1oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
     global pfd, hft, calc, du_fr, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-1oo3'
-    pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**3 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + ((ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr)))
+    pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**3 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 2
     du_fr = du_failure_rate_yr
     pt = proof_test_yr
@@ -65,8 +65,8 @@ def vote_2oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rat
 
 def vote_2oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
     global pfd, hft, calc, du_fr, pt, beta
-    calc = 'ISA-TR84.00.02-2002 Eqn.No.7-2oo3'
-    pfd = ((du_failure_rate_yr)**2 * (proof_test_yr)**2) + (3 * du_failure_rate_yr * dd_failure_rate_yr * mttr * proof_test_yr) + (ccf * du_failure_rate_yr * proof_test_yr / 2 )
+    calc = 'ISA-TR84.00.02-2015 Table C.2-2oo3'
+    pfd = 3*((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 1
     du_fr = du_failure_rate_yr
     pt = proof_test_yr
