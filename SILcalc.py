@@ -24,61 +24,73 @@ def results(pfd, hft, calc):
     print('%s HFT: %d' % (subsystem, hft))
 
 def vote_1oo1(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc =  'ISA-TR84.00.02-2015 Table C.2-1oo1'
     pfd = ((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)
     hft = 0
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = 'Not Applicable'
     results(pfd, hft, calc)
 
 def vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-1oo2'
     pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 1
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = ccf
     results(pfd, hft, calc)
 
 def vote_1oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-1oo3'
     pfd = ((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * ((du_failure_rate_yr + dd_failure_rate_yr) * mttr)))**3 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 2
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = ccf
     results(pfd, hft, calc)
 
 def vote_2oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-2oo2'
     pfd = 2*(((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 0
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = 'Not Applicable'
     results(pfd, hft, calc)
 
 def vote_2oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-2oo3'
     pfd = 3*((((1-ccf) * du_failure_rate_yr * proof_test_yr) / 2) + ((1-ccf) * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))**2 + (((ccf * du_failure_rate_yr * proof_test_yr) / 2) + (ccf * (du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 1
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = ccf
     results(pfd, hft, calc)
 
 def vote_3oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr):
-    global pfd, hft, calc, du_fr, pt, beta
+    global pfd, hft, calc, du_fr, dd_fr, mt, pt, beta
     calc = 'ISA-TR84.00.02-2015 Table C.2-3oo3'
     pfd = 3*(((du_failure_rate_yr * proof_test_yr) / 2) + ((du_failure_rate_yr + dd_failure_rate_yr) * mttr))
     hft = 0
     du_fr = du_failure_rate_yr
+    dd_fr = dd_failure_rate_yr
+    mt = mttr
     pt = proof_test_yr
     beta = 'Not Applicable'
     results(pfd, hft, calc)
@@ -147,32 +159,41 @@ sif_name = sif_name.upper()
 print('\nSubsystem: Sensor') #Start sensor subsytem calcs
 subsystem = "Sensor"
 subcalc(vote)
+sensor_vote = voting
 sensor_pt = pt
 sensor_du = du_fr
+sensor_dd = dd_fr
 sensor_ccf = beta
 sensor_pfd = pfd
 sensor_hft = hft
 sensor_calc = calc
+sensor_mttr = mt
 #%%
 print('\nSubsystem: Logic Solver') #Start logic solver subsytem calcs
 subsystem = "Logic Solver"
 subcalc(vote)
+ls_vote = voting
 ls_pt = pt
 ls_du = du_fr
+ls_dd = dd_fr
 ls_ccf = beta
 ls_pfd = pfd
 ls_hft = hft
 ls_calc = calc
+ls_mttr = mt
 #%%
 print('\nSubsystem: Final Element') #Start final element subsytem calcs
 subsystem = "Final Element"
 subcalc(vote)
+fe_vote = voting
 fe_pt = pt
 fe_du = du_fr
+fe_dd = dd_fr
 fe_ccf = beta
 fe_pfd = pfd
 fe_hft = hft
 fe_calc = calc
+fe_mttr = mt
 #%%
 # Calculate Total PFDavg and RRF:
 sif_pfd = sensor_pfd + ls_pfd + fe_pfd #ISA-TR84.00.02-2015 Equation 8.1
@@ -209,9 +230,9 @@ os.chdir(path)
 
 fout = open(sif_name+'.txt','a')
 line0 = '-------------------------------\n----- %s -----\n-------------------------------' % revision_stamp
-line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n-----' % (sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil)
-line2 = '\nSubsystem: Sensor\n%s\nDangerous Undiagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, sensor_du, sensor_pt, sensor_ccf, round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft)
-line3 = '\nSubsystem: Logic Solver\n%s\nDangerous Undiagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, ls_du, ls_pt, ls_ccf, round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft)
-line4 = '\nSubsystem: Final Element\n%s\nDangerous Undiagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n\n' % (fe_calc, fe_du, fe_pt, fe_ccf, round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft)
+line1 = '\nSIF: %s \nSIF Total PFDavg: %g \nSIF Total RRF: %g \nSIL: %s\n-----\n-----' % (sif_name, round(sif_pfd, 6), round(sif_rrf, 2), sil)
+line2 = '\nSubsystem: Sensor\n%s\nVoting: %s\nDangerous Undiagnosed Failure Rate: %s\nDangerous Diagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nMTTR: %s\n---\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (sensor_calc, sensor_vote, sensor_du, sensor_dd, sensor_pt, sensor_ccf, round(sensor_mttr, 6), round(sensor_pfd, 6), round(sensor_pcnt, 2), sensor_hft)
+line3 = '\nSubsystem: Logic Solver\n%s\nVoting: %s\nDangerous Undiagnosed Failure Rate: %s\nDangerous Diagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nMTTR: %s\n---\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n' % (ls_calc, ls_vote, ls_du, ls_dd, ls_pt, ls_ccf, round(ls_mttr, 6), round(ls_pfd, 6), round(ls_pcnt, 2), ls_hft)
+line4 = '\nSubsystem: Final Element\n%s\nVoting: %s\nDangerous Undiagnosed Failure Rate: %s\nDangerous Diagnosed Failure Rate: %s\nProof Test Interval: %s\nCommon Cause Factor: %s\nMTTR: %s\n---\nPFDavg: %g\n%% of Total PFDavg: %g%%\nHFT: %d\n\n' % (fe_calc, fe_vote, fe_du, fe_dd, fe_pt, fe_ccf, round(fe_mttr, 6), round(fe_pfd, 6), round(fe_pcnt, 2), fe_hft)
 fout.writelines([line0, line1, line2, line3, line4])
 fout.close()
