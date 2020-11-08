@@ -3,8 +3,8 @@
 #
 # Description:
 # Calculates SIF Total PFDavg and RRF for most common voting configurations.
-# Voted subsystems are limited to having the same devices i.e. same failure rate data, prrof test interval, etc.
-# Calculations are for Low Demand functions.
+# Voted subsystems are limited to having the same devices i.e. same failure rate data, proof test interval, etc.
+# Calculations are for Low Demand mode functions.
 # Calculations are simplified to exclude Diagnostic Interval (DI) due to negligible contribution to subsystem PFDavg.
 #
 #
