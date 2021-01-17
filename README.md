@@ -6,7 +6,7 @@ simplified equations.
 - Calculate SIF total Probability of Failure on Demand average (PFDavg) based upon ISA-TR84.00.02-2015 Equation 8.1 and Risk Reduction Factor
 (RRF) for most common voting configurations. 
 - Identify SIF Safety Integrity Level (SIL).
-- Record and retain date/time stamped version of results and inputted data within a text file and associated folder.
+- Record and retain date/time stamped versions of results and inputted data within a text file and associated folder.
 
 ## Notes and limitations
 - Voted subsystems are limited to having the same devices i.e. same failure rate data, proof test interval, etc.
