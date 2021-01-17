@@ -17,7 +17,7 @@ simplified equations.
 - openSIF is designed for use on Windows. 
 - Download current release Source Code.zip file and extract contents.
 - Run installation file openSIF.exe. 
-- Install the application to a folder location different from that of the downloaded installation file. 
+- Install the application to a folder location different from that of the installation file. 
 Take note of the folder location as this is where you will run the application from and where calculations will be saved.
 - Navigate to the folder location and run the application file openSIF.exe.
 - Follow the command prompt instructions.
