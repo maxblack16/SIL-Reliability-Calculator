@@ -15,6 +15,12 @@ simplified equations.
 
 ## Use
 - openSIF is designed for use on Windows. 
-- Download and install openSIF.exe.
+- Download and run openSIF.exe. 
+- Install the application to a folder location different from that of the downloaded installation file. 
+Take note of the folder location as this is where you will run the application from and where calculations will be saved.
+- Navigate to the folder location and run the application file openSIF.exe.
+- Follow the command prompt instructions.
+
+## Use notes
 - Source code is included for verification purposes within the file openSIF.py.
 - openSIF is released to the public domain, which means you can modify it, redistribute it or use it however you like.
