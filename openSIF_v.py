@@ -113,7 +113,7 @@ def subcalc(vote):
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
-                ccf = float(input('Enter Common Cause Factor: '))
+                ccf = float(input('Enter Common Cause Factor percentage: ')) / 100
                 vote_1oo2(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
                 break
             elif voting == '1oo3':
@@ -121,7 +121,7 @@ def subcalc(vote):
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
-                ccf = float(input('Enter Common Cause Factor: '))
+                ccf = float(input('Enter Common Cause Factor percentage: ')) / 100
                 vote_1oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
                 break
             elif voting == '2oo2':
@@ -136,7 +136,7 @@ def subcalc(vote):
                 proof_test_yr = float(input('Enter proof test interval in years: '))
                 mttr = float(input('Enter MTTR in hours: ')) / hours_per_year
                 dd_failure_rate_yr = float(input('Enter dangerous diagnosed failure rate per year: '))
-                ccf = float(input('Enter Common Cause Factor: '))
+                ccf = float(input('Enter Common Cause Factor percentage: ')) / 100
                 vote_2oo3(subsystem, du_failure_rate_yr, proof_test_yr, mttr, dd_failure_rate_yr, ccf)
                 break
             elif voting == '3oo3':
