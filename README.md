@@ -21,7 +21,6 @@ simplified equations.
 Take note of the folder location as this is where you will run the application from and where calculations will be saved.
 - Navigate to the folder location and run the application file openSIF.exe.
 - Follow the command prompt instructions.
-- When you've entered your final data the command window will automatically close and your report will be saved in the location noted above.
 
 ## Use notes
 - Source code is included for verification purposes within the file openSIF.py.
